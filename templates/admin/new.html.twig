@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Stages{% endblock %}
+
+{% block body %}
+ {% block nav %} {{include('admin/include/navbaradmin.html.twig')}} {% endblock %}
+ <div class="container">
+ {{ form_start(form) }}
+ {{ form_widget(form) }}
+ {{ form_end(form) }}
+ </div>
+{% endblock %}

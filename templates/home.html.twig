@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   {% block nav %} {{include('include/navbarcandidat.html.twig')}} {% endblock %}
+ <div class="container mt-4">
+  <h1> voir tous nos offres de stages</h1>
+<div class="row">
+  {% for stage in stages %}
+   <div class="col-md-5">
+    <div class="card nb-4">
+     <div class="card-body">
+       <h5 class="card-title">
+        <b>Sujet {{loop.index}} :  </b><a href="{{ path('showstage',{id: stage.id}) }}">{{ stage.sujet }} </a>
+       </h5>
+       <p class="card-text"> <b>Description: </b>{{ stage.description | nl2br}}</p>
+        <h6 class="card-text"><b>Date de début du stage: </b>{{ stage.DateDebut|date("d/m/Y")}}</h6>
+          <h6 class="card-text"><b>Date Fin du stage: </b>{{ stage.DateFin|date("d/m/Y")}}</h6>
+         <h6 class="card-text"><b>Profil demandé: </b>{{ stage.profil | nl2br}}</h6>
+
+         <button class="btn btn-primary" >
+             <a href="{{ path('logincandidat') }}">
+                 Postuler</a></button>
+
+     </div>
+    </div>
+   </div>
+  {% endfor %}
+</div>
+     <div class="pagination">
+         {{ knp_pagination_render(stages) }}
+     </div>
+ </div>
+
+
+{% endblock %}

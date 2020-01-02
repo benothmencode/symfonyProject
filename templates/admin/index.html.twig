@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GESTION Stages{% endblock %}
+
+{% block body %}
+  {% block nav %} {{include('admin/include/navbaradmin.html.twig')}} {% endblock %}
+ <div class="container">
+  {% if stages %}
+    <table id="stages" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Sujet du Stage</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stage in stages %}
+          <tr>
+            <td>{{ stage.sujet }}</td>
+            <td>
+              <a href="/admin/{{ stage.id }}" class="btn btn-dark">Show</a>
+              <a href="/admin/edit/{{ stage.id }}" class="btn btn-dark">Edit</a>
+              <a href="#" class="btn btn-danger delete-Stage" data-id="{{stage.id}}">Delete</a>
+
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No stages to display</p>
+  {% endif %}
+ </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  <script src="/js/main.js"></script>
+{% endblock %}
