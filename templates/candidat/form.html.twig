@@ -2,7 +2,7 @@
 
 {% block body %}
 {% block nav %} {{include('include/navbarcandidat.html.twig')}} {% endblock %}
- <div class="container mt-4"> 
+ <div class="container mt-4">
 <div class="col-sm-5 col-md-5">
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form) }}
@@ -13,6 +13,7 @@
     {{ form_row(form.civilite) }}
     {{ form_row(form.dateDeNaissance) }}
     {{ form_row(form.lieuNaissance) }}
+    {{ form_row(form.photo) }}
     </div>
     <div class="form-group">
     {{ form_row(form.adresse) }}

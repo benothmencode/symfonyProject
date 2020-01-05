@@ -8,9 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CandidatRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  *     fields={"Email"},
  *     message="L'email que vous avez indiqué est deja utilisé !")
@@ -101,6 +103,12 @@ class Candidat implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $etablissement;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $photo;
+
 
     public function __construct()
     {
@@ -329,4 +337,18 @@ class Candidat implements UserInterface
 
         return $this;
     }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+
 }

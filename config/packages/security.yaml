@@ -13,7 +13,7 @@ security:
                 property: username
     firewalls:
         candidat:
-            pattern: ^/candidat/login
+            pattern: ^/candidat
 
 
             # but the firewall does not require login on every page
@@ -31,12 +31,17 @@ security:
                 # The name of the route where the login form lives
                 # When the user tries to access a protected page, they are redirected here
                 login_path: logincandidat
+                default_target_path: candidat
+                always_use_default_target_path: true
+            logout:
+                path: /logout
+                target: /
+
                 # Secure the login form against CSRF
                 # Reference: http://symfony.com/doc/current/cookbook/security/csrf_in_login_form.html
 
 
-                default_target_path: candidat
-                always_use_default_target_path: true
+
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -51,7 +56,7 @@ security:
                 always_use_default_target_path: true
             logout:
                 path: /logout
-                target: /login
+                target: /
 
 
             # activate different ways to authenticate
@@ -68,7 +73,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-         #- { path: ^/candidat, roles: ROLE_USER }
+        #- { path: ^/profile, roles: ROLE_USER }
 
     encoders:
         App\Entity\User:

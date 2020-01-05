@@ -1,9 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    {% block nav %} {{include('include/navbarcandidat.html.twig')}} {% endblock %}
+{% block title %}postuler pour un Stage{% endblock %}
 
-       <h1> your connected !</h1>
+{% block body %}
+
+    {% block nav %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+            <div class="container">
+                <a href="/" class="navbar-brand">GESTION DES STAGES</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+                    <span class="navbar-toggle-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mobile-nav">
+                    <ul class="navbar-nav ml-auto">
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{{ path('logincandidat') }}" class="nav-link">Se Connecter </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    {% endblock %}
+
+{% if app.user %}
+    <br><br><br>
+    <div class="container" >
+        <div class="row align-items-center">
+            <div class="col-3 text-center">
+                <img src="{{app.request.basepath}}/uploads/images/{{ app.user.photo }}" class="rounded-circle" height="100" width="90">
+                <br>
+                <span class="badge badge-primary">{{ app.user.username }}</span>
+            </div>
+
+    <div class="col-md-5">
+    <div class="card nb-4">
+        <div class="card-body">
+            <h5 class="card-title">
+                <b> Informations personnelles  </b>
+            </h5>
+            <p class="card-text"> <b>Civilite: </b>{{ app.user.civilite }}</p>
+            <h6 class="card-text"><b>Date de naissance: </b>{{ app.user.dateDeNaissance|date("d/m/Y")}}</h6>
+            <h6 class="card-text"><b>Lieu de naissance: </b>{{ app.user.lieuNaissance}}</h6>
+        </div>
+    </div>
+    </div>
+
+    <div class="container mt-4">
+
+        <h1> voir tous nos offres de stages</h1>
+        <div class="row">
+
+            {% for stage in stages %}
+                <div class="col-md-5">
+                    <div class="card nb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <b>Sujet {{loop.index}} :  </b><a href="{{ path('showstage',{id: stage.id}) }}">{{ stage.sujet }} </a>
+                            </h5>
+                            <p class="card-text"> <b>Description: </b>{{ stage.description | nl2br}}</p>
+                            <h6 class="card-text"><b>Date de début du stage: </b>{{ stage.DateDebut|date("d/m/Y")}}</h6>
+                            <h6 class="card-text"><b>Date Fin du stage: </b>{{ stage.DateFin|date("d/m/Y")}}</h6>
+                            <h6 class="card-text"><b>Profil demandé: </b>{{ stage.profil | nl2br}}</h6>
+                            <button class="btn btn-primary" >
+                                <a href="/candidat/postuler/{{ app.user.id }}/{{ stage.id }}">
+                                    Postuler</a></button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(stages)}}
+        </div>
+    </div>
+
+
+
+
+{% else %}
+
+<h1>vous n'ete pas connecté</h1>
+
+
+{% endif %}
 
 
 {% endblock %}
